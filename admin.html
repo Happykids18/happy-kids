@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адмінка Happy Kids</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #fff3e0; }
+        input, textarea { display: block; margin: 10px 0; padding: 10px; width: 300px; }
+        button { padding: 10px 20px; background: #ff9800; color: white; border: none; cursor: pointer; }
+        .box { margin-top: 20px; }
+        .success { color: green; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>🛠 Адмінка Happy Kids</h1>
+    <input id="name" placeholder="Назва товару" type="text">
+    <input id="price" placeholder="Ціна" type="number">
+    <textarea id="desc" placeholder="Опис"></textarea>
+    <input id="img" placeholder="Посилання на фото" type="text">
+
+    <button onclick="addProduct()">Додати товар</button>
+
+    <div class="box">
+        <h3>Статус:</h3>
+        <p id="status" class="success"></p>
+    </div>
+
+    <!-- Підключення Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js"></script>
+
+    <script>
+        // Твій конфіг Firebase (встав цей об'єкт із Firebase Console)
+        const firebaseConfig = {
+            apiKey: "ТУТ_ТВОЙ_API_KEY",
+            authDomain: "ТУТ_ТВОЙ_AUTH_DOMAIN",
+            projectId: "ТУТ_ТВОЙ_PROJECT_ID",
+            storageBucket: "ТУТ_ТВОЙ_STORAGE_BUCKET",
+            messagingSenderId: "ТУТ_ТВОЙ_MESSAGING_SENDER_ID",
+            appId: "ТУТ_ТВОЙ_APP_ID"
+        };
+
+        // Ініціалізація Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Функція для додавання товару
+        function addProduct() {
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            const desc = document.getElementById('desc').value;
+            const img = document.getElementById('img').value;
+
+            if (name && price && img) {
+                db.collection('products').add({
+                    name: name,
+                    price: parseFloat(price),
+                    desc: desc,
+                    img: img
+                })
+                .then(() => {
+                    document.getElementById('status').innerText = 'Товар успішно додано!';
+                    document.getElementById('name').value = '';
+                    document.getElementById('price').value = '';
+                    document.getElementById('desc').value = '';
+                    document.getElementById('img').value = '';
+                })
+                .catch(error => {
+                    document.getElementById('status').innerText = 'Помилка при додаванні: ' + error;
+                });
+            } else {
+                document.getElementById('status').innerText = 'Будь ласка, заповніть назву, ціну та посилання на фото.';
+            }
+        }
+    </script>
+
+</body>
+</html>
