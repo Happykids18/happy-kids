@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Kids</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<header>
+  <h1>🧸 Happy Kids</h1>
+  <input type="text" id="search" placeholder="Пошук іграшок..."/>
+  <button onclick="openCart()">🛒 Кошик (<span id="cartCount">0</span>)</button>
+</header>
+
+<main>
+  <div id="products"></div>
+</main>
+
+<!-- КОШИК -->
+<div id="cartModal" class="modal">
+  <div class="modal-content">
+    <h2>Кошик</h2>
+    <div id="cartItems"></div>
+
+    <input type="text" id="phone" placeholder="Введіть номер телефону"/>
+
+    <button onclick="sendOrder()">Оформити заявку</button>
+    <button onclick="closeCart()">Закрити</button>
+  </div>
+</div>
+
+<script src="products.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
