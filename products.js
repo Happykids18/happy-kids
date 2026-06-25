@@ -1,23 +1,32 @@
-// Эта функция загружает товары, если нужно их показывать отдельно
-function loadProductDetails(productId) {
-    const db = firebase.firestore();
-    db.collection('products').doc(productId).get().then((doc) => {
-        if (doc.exists) {
+// Инициализация Firebase должна быть выше, чтобы работала Firestore
+const db = firebase.firestore();
+
+// Функция загрузки всех товаров на главную страницу
+function loadProducts() {
+    const productsContainer = document.getElementById('products');
+
+    // Очищаем контейнер перед загрузкой
+    productsContainer.innerHTML = '';
+
+    db.collection('products').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
             const product = doc.data();
-            const container = document.getElementById('productDetails');
-            container.innerHTML = `
+            const div = document.createElement('div');
+            div.className = 'product';
+            div.innerHTML = `
                 <h2>${product.name}</h2>
                 <p>Ціна: ${product.price} грн</p>
                 <p>${product.desc}</p>
-                <img src="${product.img}" alt="${product.name}" width="300">
+                <img src="${product.img}" alt="${product.name}" width="200">
             `;
-        } else {
-            console.error('Товар не знайдено!');
-        }
+            productsContainer.appendChild(div);
+        });
     }).catch((error) => {
-        console.error('Помилка завантаження товару:', error);
+        console.error('Помилка завантаження товарів:', error);
     });
 }
 
-// Вызов функции, если нужно показать один товар (например, при клике по нему)
-// loadProductDetails('ID_ТОВАРУ');
+// Вызываем функцию при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+});
