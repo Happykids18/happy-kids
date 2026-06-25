@@ -71,3 +71,25 @@ document.getElementById("search").addEventListener("input", (e) => {
 });
 
 renderProducts();
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCMRZG834cI1LvLQN2IHEhh2vALyM7lI4U",
+  authDomain: "happy-kids-d724b.firebaseapp.com",
+  projectId: "happy-kids-d724b",
+  storageBucket: "happy-kids-d724b.firebasestorage.app",
+  messagingSenderId: "670281220123",
+  appId: "1:670281220123:web:80524de58060eb1bc238be",
+  measurementId: "G-ZJQ3QH6QDG"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
