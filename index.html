@@ -1,52 +1,30 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Kids</title>
-  <link rel="stylesheet" href="style.css"/> 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-const firebaseConfig = {
-  apiKey: "AIzaSyCMRZG834cI1LvLQN2IHEhh2vALyM7lI4U",
-  authDomain: "happy-kids-d724b.firebaseapp.com",
-  projectId: "happy-kids-d724b",
-  storageBucket: "happy-kids-d724b.firebasestorage.app",
-  messagingSenderId: "670281220123",
-  appId: "1:670281220123:web:80524de58060eb1bc238be",
-  measurementId: "G-ZJQ3QH6QDG"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Kids</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>Happy Kids</h1>
+        <nav>
+            <a href="index.html">Головна</a>
+            <a href="admin.html">Адмінка</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Наші іграшки</h2>
+        <div id="products"></div> <!-- Тут будуть з'являтися товари -->
+    </main>
+    <footer>
+        <p>&copy; 2026 Happy Kids</p>
+    </footer>
 
-<header>
-  <h1>🧸🚂🪀 Happy Kids</h1>
-  <input type="text" id="search" placeholder="Пошук іграшок..."/>
-  <button onclick="openCart()">🛒 Кошик (<span id="cartCount">0</span>)</button>
-</header>
-
-<main>
-  <div id="products"></div>
-</main>
-
-<!-- КОШИК -->
-<div id="cartModal" class="modal">
-  <div class="modal-content">
-    <h2>Кошик</h2>
-    <div id="cartItems"></div>
-
-    <input type="text" id="phone" placeholder="Введіть номер телефону"/>
-
-    <button onclick="sendOrder()">Оформити заявку</button>
-    <button onclick="closeCart()">Закрити</button>
-  </div>
-</div>
-
-<script src="products.js"></script>
-<script src="app.js"></script>
+    <!-- Підключення Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
