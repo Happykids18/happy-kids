@@ -1,74 +1,40 @@
-let cart = [];
+// Инициализация Firebase (замени на свои значения)
+const firebaseConfig = {
+    apiKey: "ТВОЙ_API_KEY",
+    authDomain: "ТВОЙ_AUTH_DOMAIN",
+    projectId: "ТВОЙ_PROJECT_ID",
+    storageBucket: "ТВОЙ_STORAGE_BUCKET",
+    messagingSenderId: "ТВОЙ_MESSAGING_SENDER_ID",
+    appId: "ТВОЙ_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-function renderProducts(list = products) {
-  const container = document.getElementById("products");
-  container.innerHTML = "";
+// Функция для добавления товара
+function addProduct() {
+    const name = document.getElementById('name').value;
+    const price = document.getElementById('price').value;
+    const desc = document.getElementById('desc').value;
+    const img = document.getElementById('img').value;
 
-  list.forEach(p => {
-    container.innerHTML += `
-      <div class="card">
-        <img src="${p.img}" />
-        <h3>${p.name}</h3>
-        <p>${p.desc}</p>
-        <b>${p.price} грн</b>
-        <button onclick="addToCart(${p.id})">Додати в кошик</button>
-      </div>
-    `;
-  });
+    if (name && price && img) {
+        db.collection('products').add({
+            name: name,
+            price: parseFloat(price),
+            desc: desc,
+            img: img
+        })
+        .then(() => {
+            document.getElementById('status').innerText = 'Товар успішно додано!';
+            document.getElementById('name').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('desc').value = '';
+            document.getElementById('img').value = '';
+        })
+        .catch(error => {
+            document.getElementById('status').innerText = 'Помилка при додаванні: ' + error;
+        });
+    } else {
+        document.getElementById('status').innerText = 'Заповніть усі поля!';
+    }
 }
-
-function addToCart(id) {
-  const item = products.find(p => p.id === id);
-  cart.push(item);
-  document.getElementById("cartCount").innerText = cart.length;
-}
-
-function openCart() {
-  document.getElementById("cartModal").style.display = "block";
-  renderCart();
-}
-
-function closeCart() {
-  document.getElementById("cartModal").style.display = "none";
-}
-
-function renderCart() {
-  const box = document.getElementById("cartItems");
-  box.innerHTML = "";
-
-  cart.forEach(p => {
-    box.innerHTML += `<p>${p.name} - ${p.price} грн</p>`;
-  });
-}
-
-function sendOrder() {
-  const phone = document.getElementById("phone").value;
-
-  if (!phone) {
-    alert("Введіть номер телефону!");
-    return;
-  }
-
-  let text = "🧸 Замовлення Happy Kids:%0A";
-
-  cart.forEach(p => {
-    text += `${p.name} - ${p.price} грн%0A`;
-  });
-
-  text += `%0A📱 Телефон: ${phone}`;
-
-  window.open(`viber://chat?number=%2B380661475555&text=${text}`);
-
-  alert("Заявку надіслано!");
-  cart = [];
-  document.getElementById("cartCount").innerText = 0;
-  closeCart();
-}
-
-document.getElementById("search").addEventListener("input", (e) => {
-  const value = e.target.value.toLowerCase();
-  renderProducts(products.filter(p => p.name.toLowerCase().includes(value)));
-});
-
-renderProducts();
-
