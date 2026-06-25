@@ -4,29 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Адмінка Happy Kids</title>
-    <style>
-        body { font-family: Arial; padding: 20px; background: #fff3e0; }
-        input, textarea { display: block; margin: 10px 0; padding: 10px; width: 300px; }
-        button { padding: 10px 20px; background: #ff9800; color: white; border: none; cursor: pointer; }
-        .box { margin-top: 20px; }
-        .success { color: green; margin-top: 10px; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>🛠 Адмінка Happy Kids</h1>
-    <input id="name" placeholder="Назва товару" type="text">
-    <input id="price" placeholder="Ціна" type="number">
-    <textarea id="desc" placeholder="Опис"></textarea>
-    <input id="img" placeholder="Посилання на фото" type="text">
-    <button onclick="addProduct()">Додати товар</button>
-    <div class="box">
-        <h3>Статус:</h3>
-        <p id="status" class="success"></p>
-    </div>
+    <header>
+        <h1>Адмінка Happy Kids</h1>
+        <nav>
+            <a href="index.html">Головна</a>
+            <a href="admin.html">Адмінка</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Додати новий товар</h2>
+        <form id="productForm">
+            <input id="name" placeholder="Назва товару" type="text" required>
+            <input id="price" placeholder="Ціна" type="number" required>
+            <textarea id="desc" placeholder="Опис" required></textarea>
+            <input id="img" placeholder="Посилання на фото" type="text" required>
+            <button type="button" onclick="addProduct()">Додати товар</button>
+        </form>
+        <p id="status"></p>
+    </main>
+    <footer>
+        <p>&copy; 2026 Happy Kids</p>
+    </footer>
 
+    <!-- Підключення Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js"></script>
-
     <script src="app.js"></script>
 </body>
 </html>
